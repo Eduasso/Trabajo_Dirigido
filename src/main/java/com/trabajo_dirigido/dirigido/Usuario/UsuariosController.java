@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -36,6 +34,11 @@ public class UsuariosController{
 
     public UsuariosController(){}
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder){
+        binder.setValidator(new ValidadorUsuario());
+    }
+
     @GetMapping("/registrar")
     public String registrar(ModelMap model){
         model.addAttribute("usuario", new Usuario());
@@ -44,13 +47,13 @@ public class UsuariosController{
 
     @PostMapping("/registrar")
     public String registrar(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, ModelMap model){
-        String view = "redirect:reservar";
+        String view = "reservar";
 
         if(!result.hasErrors()){
             usuarioDAO.crea(usuario);
             model.clear();
         }else {
-            view = "usuarios/registrar";
+            view = "registrar";
         }
         return view;
     }
