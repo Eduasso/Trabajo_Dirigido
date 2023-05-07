@@ -16,7 +16,7 @@ public class ValidadorUsuario implements Validator {
         Usuario usuario = (Usuario) target;
 
         // El nombre es obligatorio
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "field.nombre.required", "El nombre es obligatorio");
+        ValidationUtils.rejectIfEmpty(errors, "nombre", "field.nombre.required", "El nombre es obligatorio");
 
         // Longitud del nombre máxima: 20 caracteres
         if(usuario.getNombre().length() > 20){
@@ -24,7 +24,7 @@ public class ValidadorUsuario implements Validator {
         }
 
         // Los apellidos son obligatorios
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "apellidos", "field.apellidos.required", "Los apellidos son obligatorios");
+        ValidationUtils.rejectIfEmpty(errors, "apellidos", "field.apellidos.required", "Los apellidos son obligatorios");
 
         // Longitud de los apellidos máxima: 40 caracteres
         if(usuario.getApellidos().length() > 40){
@@ -32,13 +32,13 @@ public class ValidadorUsuario implements Validator {
         }
 
         // El DNI es obligatorio
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "field.dni.required", "El DNI es obligatorio");
+        ValidationUtils.rejectIfEmpty(errors, "dni", "field.dni.required", "El DNI es obligatorio");
 
         // El DNI debe tener un formato NNNNNNNNL donde N=Nº y L=Letra
         validarDNI(usuario.getDni(), errors);
 
         // El Nº de teléfono es obligatorio
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telef", "field.telef.required", "El Nº de teléfono es obligatorio");
+        ValidationUtils.rejectIfEmpty(errors, "telef", "field.telef.required", "El Nº de teléfono es obligatorio");
 
         // El Nº de teléfono debe tener una longitud entre 9 y 12 dígitos
         if(usuario.getTelef().length() < 9 || usuario.getTelef().length() > 12){
@@ -46,7 +46,7 @@ public class ValidadorUsuario implements Validator {
         }
 
         // La dirección es obligatoria
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "direccion", "field.direccion.required", "La direccion es obligatoria");
+        ValidationUtils.rejectIfEmpty(errors, "direccion", "field.direccion.required", "La direccion es obligatoria");
 
         // La direción debe tener una longitud máxima de 50 caracteres
         if(usuario.getDireccion().length() > 50){
@@ -54,7 +54,7 @@ public class ValidadorUsuario implements Validator {
         }
 
         // El correo es obligatorio
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "correo", "field.correo.required", "El correo electrónico es obligatorio");
+        ValidationUtils.rejectIfEmpty(errors, "correo", "field.correo.required", "El correo electrónico es obligatorio");
 
         // El correo debe tener una longitud máxima de 30 caracteres
         if(usuario.getCorreo().length() > 30){
@@ -62,7 +62,7 @@ public class ValidadorUsuario implements Validator {
         }
 
         // La password es obligatoria
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "field.password.required", "La contraseña es obligatoria");
+        ValidationUtils.rejectIfEmpty(errors, "password", "field.password.required", "La contraseña es obligatoria");
 
         // La contraseña debe tener una longitud mínima de 10 caracteres
         if(usuario.getPassword().length() < 10){
@@ -72,11 +72,15 @@ public class ValidadorUsuario implements Validator {
     }
 
     private void validarDNI(String dni, Errors errors){
+        if(dni.length() == 0){
+            errors.rejectValue("dni", "field.dni.invalid", "DNI no válido");
+            return;
+        }
         String letraMayuscula = ""; //Guardaremos la letra introducida en formato mayúscula
 
         // Aquí excluimos cadenas distintas a 9 caracteres que debe tener un dni y también si el último caracter no es una letra
         if(dni.length() != 9 || !Character.isLetter(dni.charAt(8))) {
-            errors.rejectValue("password", "field.password.invalid", "DNI no válido");
+            errors.rejectValue("dni", "field.dni.invalid", "DNI no válido");
         }
 
         // Al superar la primera restricción, la letra la pasamos a mayúscula

@@ -17,13 +17,13 @@
 <%--CABECERA--%>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand me-2" href="index.jsp">
+        <a class="navbar-brand me-2" href="">
             <img src="./img/logo.png" alt="Logo" height="80" style="margin-top: -1px;"/>
         </a>
 
         <!-- Right links -->
         <div class="d-flex align-items-center">
-            <a href="index.jsp">
+            <a>
                 <button type="button" class="btn btn-link px-3 me-2" style="color:#40C9A2">
                     Iniciar Sesión
                 </button>
