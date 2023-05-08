@@ -45,22 +45,6 @@ public class UsuariosController{
         return "usuarios/registrar";
     }
 
-    /*
-    @PostMapping("/registrar")
-    public String registrar(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, ModelMap model){
-        String view = "redirect:reservar";
-
-        if(!result.hasErrors()){
-            usuarioDAO.crea(usuario);
-            model.clear();
-            System.out.println("No tiene errores");
-        }else {
-            view = "registrar";
-            System.out.println("TIENE ERRORES");
-        }
-        return view;
-    }
-*/
     @RequestMapping(value = "/registrar", method = RequestMethod.POST)
     public String manejarFormularioYaValidado(@Valid Usuario usuario,
                                               BindingResult result) {
@@ -71,17 +55,12 @@ public class UsuariosController{
         }
 
         // si no hay errores, manejamos los datos validados...
-
-        return "usuarios/reservar";
+        return "usuarios/registrado";
 
     }
-    @GetMapping("/reservar")
+    @GetMapping("/registrado")
     public String reservar(ModelMap model){
-        return "usuarios/reservar";
+        return "usuarios/registrado";
     }
 
-    @GetMapping("/index")
-    public String index(){
-        return "index";
-    }
 }

@@ -139,15 +139,4 @@ public class ValidadorUsuario implements Validator {
         }
     }
 
-    private boolean esta(String digito){
-        boolean esta = false;
-        String[] unoNueve = {"0","1","2","3","4","5","6","7","8","9"};
-        for (int i = 0; i < unoNueve.length; i++){
-            if(digito == unoNueve[i]){
-                esta = true;
-            }
-        }
-        return esta;
-    }
-
 }

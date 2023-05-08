@@ -18,7 +18,7 @@
 <%--CABECERA--%>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand me-2" href="">
+        <a class="navbar-brand me-2" href="../../index.jsp">
             <img src="../../../img/logo.png" alt="Logo" height="80" style="margin-top: -1px;"/>
         </a>
 
@@ -42,8 +42,6 @@
 <main>
     <div class="container pt-5 p-4">
         <h3 style="border-bottom: 0.01rem solid #9a9a9a">Registro de usuario</h3>
-
-        <c:url value="/usuarios/registrar" var="destino"/>
         <form:form method="POST" class="row" modelAttribute="usuario">
         <div class="col-6">
             <form:label path="nombre">Nombre: </form:label>
@@ -81,9 +79,6 @@
             <div><form:errors cssClass="form-text text-danger" path="password"/></div>
         </div>
             <div class="d-flex justify-content-center pt-4">
-<%--                <a href="<c:url value="../index.jsp"/>">--%>
-<%--                    <button class="btn btn-secondary m-4" style="background-color:#ff545b;border-color:#ff545b">Cancelar</button>--%>
-<%--                </a>--%>
                 <input name="enviar" type="reset" value="Cancelar" class="btn btn-secondary m-4" style="background-color:#ff545b;border-color:#ff545b">
                 <input name="enviar" type="Submit" value="Registrarse" class="btn btn-secondary m-4" style="background-color:#40C9A2;border-color:#40C9A2">
             </div>
