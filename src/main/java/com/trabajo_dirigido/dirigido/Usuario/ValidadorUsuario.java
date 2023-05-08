@@ -5,6 +5,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ValidadorUsuario implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
@@ -35,13 +38,15 @@ public class ValidadorUsuario implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "dni", "field.dni.required", "El DNI es obligatorio");
 
         // El DNI debe tener un formato NNNNNNNNL donde N=Nº y L=Letra
-        validarDNI(usuario.getDni(), errors);
+        if(errors.getFieldErrorCount("dni") == 0){
+            validarDNI(usuario.getDni(), errors);
+        }
 
         // El Nº de teléfono es obligatorio
         ValidationUtils.rejectIfEmpty(errors, "telef", "field.telef.required", "El Nº de teléfono es obligatorio");
 
         // El Nº de teléfono debe tener una longitud entre 9 y 12 dígitos
-        if(usuario.getTelef().length() < 9 || usuario.getTelef().length() > 12){
+        if((usuario.getTelef().length() < 9 || usuario.getTelef().length() > 12) && errors.getFieldErrorCount("telef") == 0){
             errors.rejectValue("telef", "field.telef.invalid", "El Nº de teléfono debe tener una longitud de entre 9 y 12 dígitos");
         }
 
@@ -65,17 +70,13 @@ public class ValidadorUsuario implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "password", "field.password.required", "La contraseña es obligatoria");
 
         // La contraseña debe tener una longitud mínima de 10 caracteres
-        if(usuario.getPassword().length() < 10){
+        if(usuario.getPassword().length() < 10 && errors.getFieldErrorCount("password") == 0){
             errors.rejectValue("password", "field.password.invalid", "La contraseña debe tener una longitud mínima de 10 caracteres");
         }
 
     }
 
     private void validarDNI(String dni, Errors errors){
-        if(dni.length() == 0){
-            errors.rejectValue("dni", "field.dni.invalid", "DNI no válido");
-            return;
-        }
         String letraMayuscula = ""; //Guardaremos la letra introducida en formato mayúscula
 
         // Aquí excluimos cadenas distintas a 9 caracteres que debe tener un dni y también si el último caracter no es una letra

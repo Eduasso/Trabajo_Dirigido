@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
-    @Size(min = 4, max = 25, message = "La longitud ${validatedValue} debe estar entre {min} y {max} caracteres")
     private String nombre;
     private String apellidos;
     @Id
